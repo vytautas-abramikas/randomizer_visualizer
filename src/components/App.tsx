@@ -9,7 +9,7 @@ export const App: React.FC = () => {
   const [delay, setDelay] = useState<number>(0);
   const [runCount, setRunCount] = useState<number>(0);
   const [counts, setCounts] = useState<number[]>([]);
-  const [running, setRunning] = useState<boolean>(false); // New state to control running
+  const [running, setRunning] = useState<boolean>(false);
 
   const runningRef = useRef(running);
 
@@ -20,10 +20,12 @@ export const App: React.FC = () => {
     }
   }, [running]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submit = (rangeS: number, runsS: number, delayS: number) => {
+    setRange(rangeS);
+    setRuns(runsS);
+    setDelay(delayS);
     setRunCount(0);
-    setCounts(Array(range).fill(0));
+    setCounts(Array(rangeS).fill(0));
     setRunning(true);
   };
 
@@ -37,7 +39,7 @@ export const App: React.FC = () => {
         return newCounts;
       });
       setRunCount((prev) => prev + 1);
-      if (delay > 0) {
+      if (delay > -1) {
         await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
@@ -45,7 +47,7 @@ export const App: React.FC = () => {
   };
 
   const handleStop = () => {
-    setRunning(false); // Stop the visualizer
+    setRunning(false);
   };
 
   return (
@@ -59,10 +61,7 @@ export const App: React.FC = () => {
           runs={runs}
           delay={delay}
           running={running}
-          setRange={setRange}
-          setRuns={setRuns}
-          setDelay={setDelay}
-          handleSubmit={handleSubmit}
+          submit={submit}
           handleStop={handleStop}
         />
       </div>

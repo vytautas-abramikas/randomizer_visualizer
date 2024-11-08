@@ -1,26 +1,22 @@
-import React from "react";
+import { useState } from "react";
 
 export const ConfigForm: React.FC<{
   range: number;
   runs: number;
   delay: number;
   running: boolean;
-  setRange: (value: number) => void;
-  setRuns: (value: number) => void;
-  setDelay: (value: number) => void;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  submit: (rangeS: number, runsS: number, delayS: number) => void;
   handleStop: () => void;
-}> = ({
-  range,
-  runs,
-  delay,
-  running,
-  setRange,
-  setRuns,
-  setDelay,
-  handleSubmit,
-  handleStop,
-}) => {
+}> = ({ range, runs, delay, running, submit, handleStop }) => {
+  const [localRange, setLocalRange] = useState<number>(range);
+  const [localRuns, setLocalRuns] = useState<number>(runs);
+  const [localDelay, setLocalDelay] = useState<number>(delay);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submit(localRange, localRuns, localDelay);
+  };
+
   return (
     <form className="flex items-center space-x-4 mt-4" onSubmit={handleSubmit}>
       <div>
@@ -29,12 +25,14 @@ export const ConfigForm: React.FC<{
         </label>
         <input
           type="number"
+          value={localRange || ""}
+          onChange={(e) => setLocalRange(Number(e.target.value))}
           id="range"
           name="range"
           placeholder="Range"
           className="px-3 py-2 border border-gray-300 rounded"
-          value={range || ""}
-          onChange={(e) => setRange(parseInt(e.target.value))}
+          min="2"
+          max="1000"
           required
         />
       </div>
@@ -44,12 +42,14 @@ export const ConfigForm: React.FC<{
         </label>
         <input
           type="number"
+          value={localRuns || ""}
+          onChange={(e) => setLocalRuns(Number(e.target.value))}
           id="runs"
           name="runs"
           placeholder="Runs"
           className="px-3 py-2 border border-gray-300 rounded"
-          value={runs || ""}
-          onChange={(e) => setRuns(parseInt(e.target.value))}
+          min="1"
+          max="1000000"
           required
         />
       </div>
@@ -59,12 +59,14 @@ export const ConfigForm: React.FC<{
         </label>
         <input
           type="number"
+          value={localDelay || ""}
+          onChange={(e) => setLocalDelay(Number(e.target.value))}
           id="delay"
           name="delay"
           placeholder="Delay"
           className="px-3 py-2 border border-gray-300 rounded"
-          value={delay || ""}
-          onChange={(e) => setDelay(parseInt(e.target.value))}
+          min="-1"
+          max="1000"
         />
       </div>
       <div>
