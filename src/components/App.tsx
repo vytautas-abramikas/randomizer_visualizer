@@ -22,12 +22,10 @@ export const App: React.FC = () => {
       setCounts((prevCounts) => {
         const newCounts = [...prevCounts];
         newCounts[randomNum]++;
-        console.log(`Updated counts after run ${i + 1}:`, newCounts); // Log updated counts
         return newCounts;
       });
       setRunCount((prev) => {
         const newRunCount = prev + 1;
-        console.log(`Updated runCount: ${newRunCount}`); // Log updated runCount
         return newRunCount;
       });
       await new Promise((resolve) => setTimeout(resolve, delay));

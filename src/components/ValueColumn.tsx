@@ -6,9 +6,6 @@ export const ValueColumn: React.FC<{
   const heightPercentage = runCount > 0 ? (count / runCount) * 100 : 0;
 
   const widthPercentage = 100 / range;
-  console.log(
-    `ValueColumn - count: ${count}, runCount: ${runCount}, heightPercentage: ${heightPercentage}%`
-  );
 
   return (
     <div
