@@ -51,7 +51,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <main className="bg-black w-screen h-screen flex flex-col justify-start items-center">
+    <main className="font-sans bg-black w-screen h-screen flex flex-col justify-start items-center">
       <div className="absolute top-4 left-4">
         <Counter count={runCount} running={running} />
       </div>
